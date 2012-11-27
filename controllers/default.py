@@ -34,16 +34,20 @@ def add_diet_item():
     response.flash = 'this is add_diet_item()'
     import urllib, urllib2
     import json
-    results = json.loads(urllib.urlopen('http://api.esha.com/foods?apikey=xck7a6d547sknsh3tuca6vdx&query=broccoli').read(), encoding='UTF-8')
+    results = json.loads(urllib.urlopen('http://api.esha.com/foods?apikey=xck7a6d547sknsh3tuca6vdx&query=snickers').read(), encoding='UTF-8')
     items = results['items']
-    data = {"items": [ { "id": "urn:uuid:17dbb668-f3f4-4822-8566-f46496887edc",
-                         "quantity": 0.5, "unit": "urn:uuid:3e8384f0-ea47-4fde-b7e1-a12747b28a30" } ]
+    
+    data = {"items": [ { "id": "urn:uuid:914939fb-0571-45b2-bc98-a3a8122ceb72",
+                         "quantity": 1, "unit": "urn:uuid:85562e85-ba37-4e4a-8400-da43170204a7" } ]
            }
     req = urllib2.Request('http://api.esha.com/analysis?apikey=xck7a6d547sknsh3tuca6vdx')
     req.add_header('Content-Type', 'application/json')
     f=urllib2.urlopen(req, json.dumps(data))
-    results = f.read()
-    return dict(items=items, results=results)
+    broccoli = f.read()
+    
+    nutrients = json.loads(urllib.urlopen('http://api.esha.com/nutrients?apikey=xck7a6d547sknsh3tuca6vdx').read(), encoding='UTF-8')
+    units = json.loads(urllib.urlopen('http://api.esha.com/food-units?apikey=xck7a6d547sknsh3tuca6vdx').read(), encoding='UTF-8')
+    return dict(items=items, broccoli=broccoli, nutrients=nutrients, units=units)
     
 def user():
     """
