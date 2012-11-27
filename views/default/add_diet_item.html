@@ -1,0 +1,10 @@
+{{extend 'layout.html'}}
+<h1>Learning JSON...</h1>
+<UL>
+{{for item in items:}}
+<li>{{=item}}</li>
+<li>{{=item[u'group']}} -- {{=item[u'description']}} -- {{=item[u'id']}}</li>
+{{pass}}
+</UL>
+
+{{=results}}

@@ -1,0 +1,9 @@
+{{extend 'layout.html'}}
+<h1>The Menu</h1>
+<h2>Diet Items</h2>
+<!-- make a table bro... -->
+<ul>
+{{for diet_item in diet_items:}}
+{{=LI(diet_item.name, ' -- ', diet_item.serving_size)}}
+{{pass}}
+</ul>

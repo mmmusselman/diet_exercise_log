@@ -1,0 +1,8 @@
+{{extend 'layout.html'}}
+<h1>View the Log</h1>
+<h2>Past Meals</h2>
+<ul>
+{{for meal in meals:}}
+{{=LI(meal.name, ' -- ', meal.dt)}}
+{{pass}}
+</ul>

@@ -1,0 +1,142 @@
+timestamp: 2012-09-30T04:33:10.671809
+CREATE TABLE auth_user(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    first_name CHAR(128),
+    last_name CHAR(128),
+    email CHAR(512),
+    password CHAR(512),
+    registration_key CHAR(512),
+    reset_password_key CHAR(512),
+    registration_id CHAR(512)
+);
+success!
+timestamp: 2012-09-30T04:33:10.871905
+CREATE TABLE auth_group(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    role CHAR(512),
+    description TEXT
+);
+success!
+timestamp: 2012-09-30T04:33:10.932311
+CREATE TABLE auth_membership(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES auth_user(id) ON DELETE CASCADE,
+    group_id INTEGER REFERENCES auth_group(id) ON DELETE CASCADE
+);
+success!
+timestamp: 2012-09-30T04:33:10.990960
+CREATE TABLE auth_permission(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    group_id INTEGER REFERENCES auth_group(id) ON DELETE CASCADE,
+    name CHAR(512),
+    table_name CHAR(512),
+    record_id INTEGER
+);
+success!
+timestamp: 2012-09-30T04:33:11.045129
+CREATE TABLE auth_event(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    time_stamp TIMESTAMP,
+    client_ip CHAR(512),
+    user_id INTEGER REFERENCES auth_user(id) ON DELETE CASCADE,
+    origin CHAR(512),
+    description TEXT
+);
+success!
+timestamp: 2012-09-30T04:33:11.114711
+CREATE TABLE auth_cas(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES auth_user(id) ON DELETE CASCADE,
+    created_on TIMESTAMP,
+    service CHAR(512),
+    ticket CHAR(512),
+    renew CHAR(1)
+);
+success!
+timestamp: 2012-09-30T04:33:11.172962
+CREATE TABLE food_item(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    owner_id INTEGER REFERENCES auth_user(id) ON DELETE CASCADE,
+    name CHAR(512),
+    type CHAR(512),
+    brand CHAR(512),
+    description TEXT,
+    serving_size CHAR(512),
+    calories CHAR(512),
+    calories_from_fat CHAR(512),
+    total_fat CHAR(512),
+    saturated_fat CHAR(512),
+    trans_fat CHAR(512),
+    cholesterol CHAR(512),
+    sodium CHAR(512),
+    carbohydrates CHAR(512),
+    dietary_fiber CHAR(512),
+    sugars CHAR(512),
+    protein CHAR(512)
+);
+success!
+timestamp: 2012-09-30T04:33:11.256273
+CREATE TABLE food_entry(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    owner_id INTEGER REFERENCES auth_user(id) ON DELETE CASCADE,
+    dt TIMESTAMP,
+    food_item_id INTEGER REFERENCES food_item(id) ON DELETE CASCADE,
+    number_of_servings CHAR(512)
+);
+success!
+timestamp: 2012-09-30T04:39:22.593274
+ALTER TABLE food_item ADD sugars_g CHAR(512);
+timestamp: 2012-09-30T04:39:22.673579
+ALTER TABLE food_item ADD saturated_fat_g CHAR(512);
+timestamp: 2012-09-30T04:39:22.698217
+ALTER TABLE food_item ADD cholesterol_mg CHAR(512);
+timestamp: 2012-09-30T04:39:22.722783
+ALTER TABLE food_item ADD dietary_fiber_g CHAR(512);
+timestamp: 2012-09-30T04:39:22.767592
+ALTER TABLE food_item ADD carbohydrates_g CHAR(512);
+timestamp: 2012-09-30T04:39:22.788797
+ALTER TABLE food_item ADD trans_fat_g CHAR(512);
+timestamp: 2012-09-30T04:39:22.873563
+ALTER TABLE food_item ADD total_fat_g CHAR(512);
+timestamp: 2012-09-30T04:39:22.896807
+ALTER TABLE food_item ADD protein_g CHAR(512);
+timestamp: 2012-09-30T04:39:22.915734
+ALTER TABLE food_item ADD sodium_mg CHAR(512);
+timestamp: 2012-10-23T02:30:22.743779
+CREATE TABLE diet_item(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    owner_id INTEGER REFERENCES auth_user(id) ON DELETE CASCADE,
+    name CHAR(512),
+    type CHAR(512),
+    brand CHAR(512),
+    description TEXT,
+    serving_size CHAR(512),
+    calories CHAR(512),
+    calories_from_fat CHAR(512),
+    total_fat_g CHAR(512),
+    saturated_fat_g CHAR(512),
+    trans_fat_g CHAR(512),
+    cholesterol_mg CHAR(512),
+    sodium_mg CHAR(512),
+    carbohydrates_g CHAR(512),
+    dietary_fiber_g CHAR(512),
+    sugars_g CHAR(512),
+    protein_g CHAR(512)
+);
+success!
+timestamp: 2012-10-23T02:30:22.875721
+CREATE TABLE meal(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    owner_id INTEGER REFERENCES auth_user(id) ON DELETE CASCADE,
+    name CHAR(512),
+    dt TIMESTAMP
+);
+success!
+timestamp: 2012-10-23T02:30:22.928595
+CREATE TABLE meal_items(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    meal_id INTEGER REFERENCES meal(id) ON DELETE CASCADE,
+    num_servings CHAR(512),
+    diet_item_id INTEGER REFERENCES diet_item(id) ON DELETE CASCADE
+);
+success!
